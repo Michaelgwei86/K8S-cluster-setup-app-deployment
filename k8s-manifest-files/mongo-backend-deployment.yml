@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mongo
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: mongo
+        tier: backend
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        ports:
+        - name: mongo
+          containerPort: 27017
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
+            cpu: 250m
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - general
+

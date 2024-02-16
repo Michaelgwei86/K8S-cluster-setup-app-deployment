@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knote
+spec:
+  selector:
+    app: knote
+    tier: frontend
+  ports:
+    - port: 80
+      targetPort: 3000
+      nodePort: 30000
+  type: LoadBalancer
